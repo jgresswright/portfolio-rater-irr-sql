@@ -76,13 +76,13 @@ sql-duckdb-rater-irr/
 
 ```bash
 # 1. Generate the synthetic dataset
-duckdb rater_irr.duckdb < data/generate_data.py
+duckdb db/rater_irr.duckdb < data/generate_data.py
 
 # 2. Run each query category
-duckdb rater_irr.duckdb < queries/01_aggregation_joins.sql
-duckdb rater_irr.duckdb < queries/02_cte_window_volatility.sql
-duckdb rater_irr.duckdb < queries/03_case_cohort_comparison.sql
-duckdb rater_irr.duckdb < queries/04_rank_tie_handling.sql
+duckdb db/rater_irr.duckdb < queries/01_aggregation_joins.sql
+duckdb db/rater_irr.duckdb < queries/02_cte_window_volatility.sql
+duckdb db/rater_irr.duckdb < queries/03_case_cohort_comparison.sql
+duckdb db/rater_irr.duckdb < queries/04_rank_tie_handling.sql
 ```
 
 ## Skills Demonstrated
