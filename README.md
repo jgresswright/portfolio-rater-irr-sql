@@ -60,7 +60,7 @@ sql-duckdb-rater-irr/
 │
 ├── README.md                          # This file
 ├── data/
-│   └── synthetic_data_generator.sql   # or .py — synthetic dataset creation
+│   └── generate_data.py   # synthetic dataset creation
 │
 ├── queries/
 │   ├── 01_aggregation_joins.sql       # Agreement spread by domain
