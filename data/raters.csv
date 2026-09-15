@@ -1,0 +1,13 @@
+rater_id,tendency,base_consistency,expertise_domain
+R001,lenient,0.824,creative
+R002,moderate,0.872,opinion
+R003,lenient,0.77,opinion
+R004,moderate,0.711,technical
+R005,strict,0.8,factual
+R006,lenient,0.667,factual
+R007,lenient,0.873,factual
+R008,lenient,0.821,technical
+R009,strict,0.855,creative
+R010,moderate,0.746,technical
+R011,moderate,0.912,creative
+R012,lenient,0.891,creative
