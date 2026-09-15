@@ -72,13 +72,11 @@ sql-duckdb-rater-irr/
     └── rater_irr.duckdb                # Local DuckDB database file
 ```
 
-*(Adjust the structure above to match your actual file names before publishing.)*
-
 ## Running the Analysis
 
 ```bash
 # 1. Generate the synthetic dataset
-duckdb rater_irr.duckdb < data/synthetic_data_generator.sql
+duckdb rater_irr.duckdb < data/generate_data.py
 
 # 2. Run each query category
 duckdb rater_irr.duckdb < queries/01_aggregation_joins.sql
