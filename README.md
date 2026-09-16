@@ -4,8 +4,6 @@
 
 This project analyzes inter-rater agreement and disagreement patterns in a synthetic LLM-evaluation dataset (12 raters, 900 evaluations, 2,700 ratings across 6 batches) using SQL against a local DuckDB database — a second, independent portfolio piece built to demonstrate SQL depth (CTEs, window functions, joins) as a companion to an earlier R-based statistical analysis of the same domain.
 
-**Key Cross-Dataset Finding:** This project independently reproduces the earlier R portfolio project's core finding — opinion-based evaluations show the lowest rater agreement of any domain — this time on a fully separate synthetic dataset, giving that pattern a validated, cross-dataset result rather than a single-dataset observation.
-
 **Key Technical Achievement:** A full SQL analytics pipeline covering four distinct query patterns — aggregation/joins, CTE-based window functions, CASE-based cohort bucketing, and RANK()-based tie-aware ranking — all hand-written and debugged without code generation, consistent with an own-work-first approach to skill-building.
 
 ## Project Overview
@@ -28,7 +26,7 @@ Synthetic dataset generated for this project (independent of the R project's dat
 
 ### Query Categories
 
-1. **Aggregation & Joins** — Per-evaluation agreement computed as a MAX−MIN spread across raters, broken down by domain. Replicates the R project's finding that opinion evaluations show the lowest agreement of any domain, this time via direct SQL aggregation rather than Fleiss' Kappa.
+1. **Aggregation & Joins** — Per-evaluation agreement computed as a MAX−MIN spread across raters, broken down by domain. Opinion evaluations showed the widest spread in this dataset, though the effect is small (0.79 vs. ~0.76 for other domains) and traces at least partly to this dataset's rater pool having fewer opinion-domain experts (2 of 12) than any other domain — worth noting as a modeling artifact rather than a validated real-world pattern.
 
 2. **CTEs & Window Functions (LAG)** — Per-rater rolling volatility, computed as the average absolute delta between a rater's consecutive ratings. Surfaces a real spread between the most-volatile rater (R008, ~1.76 average delta) and the most-consistent (R007, ~1.54).
 
@@ -44,7 +42,7 @@ Synthetic dataset generated for this project (independent of the R project's dat
 
 ## Key Findings
 
-- **Opinion evaluations remain the hardest to agree on** — this holds across two independently generated synthetic datasets and two entirely different analytical approaches (R/statistical vs. SQL/aggregation), which is a stronger claim than either project could make alone.
+- **Opinion evaluations showed the widest agreement spread in this dataset** — a small effect (0.79 vs. ~0.76 for other domains) that's likely explained by this dataset's random rater-expertise draw giving opinion the fewest domain experts (2 of 12), rather than a structural property worth generalizing from.
 - **Rater volatility is measurable and meaningfully different across raters** — a ~0.22-point gap in average consecutive-rating delta between the most- and least-volatile raters in this dataset.
 - **A modest late-batch drift in disagreement appeared** — real, but small enough that it's presented here as a flag for further monitoring rather than a strong conclusion.
 - **Tie-aware ranking matters** — a naive `ROW_NUMBER()` approach would have silently discarded three of four genuinely tied "most disagreed" evaluations in one batch; `RANK()` preserves them.
@@ -96,13 +94,12 @@ duckdb db/rater_irr.duckdb < queries/04_rank_tie_handling.sql
 
 - **SQL Depth**: Multi-table joins, chained CTEs, window functions (`LAG`, `RANK`), `CASE`-based bucketing
 - **Data Modeling**: Designing a relational schema for rater/evaluation/batch data
-- **Cross-Project Validation**: Independently confirming a finding from a separate portfolio project using a different tool and dataset
 - **Reproducible, Own-Work Analysis**: All queries hand-written and debugged without code generation
 - **Domain Expertise**: LLM evaluation quality and inter-rater reliability
 
 ## Related Work
 
-This project is a companion piece to [Statistical Analysis of LLM Evaluation Quality Patterns](../portfolio-llm-eval-quality) — the R/tidyverse project that first surfaced the opinion-agreement finding this project independently reproduces.
+This project is a companion piece to [Statistical Analysis of LLM Evaluation Quality Patterns](../portfolio-llm-eval-quality) — the R/tidyverse project analyzing the same conceptual domain (LLM evaluation quality) using statistical modeling rather than raw SQL.
 
 ## About This Project
 
